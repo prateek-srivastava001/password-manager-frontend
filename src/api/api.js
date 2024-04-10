@@ -13,6 +13,7 @@ export const login = async (req) => {
       return false;
     }
     const data = await response.json();
+    localStorage.setItem('name',data.name);
     localStorage.setItem('token', data.token);
     return true;
   } catch (error) {

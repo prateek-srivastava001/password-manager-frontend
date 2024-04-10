@@ -11,10 +11,17 @@ body {
   margin-bottom: 10px;
 }
 
+.heading-2 {
+  font-size: 24px;
+  font-weight: 2000;
+  color: black;
+  margin-bottom: 10px;
+}
+
 .description {
   font-size: 18px;
   color: grey;
-  margin-top: 1px;
+  margin-top: -12px;
   margin-bottom: 24px;
 }
 
