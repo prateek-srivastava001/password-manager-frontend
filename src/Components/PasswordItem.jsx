@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from "react-toastify";
 import PasswordForm from './PasswordForm';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { deletePassword, editPassword, fetchPasswords } from '../api/api';
 
 const PasswordItem = ({ password, onDelete }) => {
@@ -53,10 +52,7 @@ const PasswordItem = ({ password, onDelete }) => {
       {isExpanded && (
         <div className="details">
           <p><strong>Email:</strong> {email}</p>
-          <p><strong>Password:</strong> {showPassword ? pw : '●'.repeat(pw.length)}
-          <button id="toggle" onClick={togglePasswordVisibility}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </button></p>
+          <p><strong>Password:</strong> {pw}</p>
           <p><strong>URL:</strong> {url}</p>
         </div>
       )}

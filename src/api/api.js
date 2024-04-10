@@ -23,7 +23,7 @@ export const login = async (req) => {
 
 export const signup = async (req) => {
     try {
-      const response = await fetch(`${BASE_URL}/login`, {
+      const response = await fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

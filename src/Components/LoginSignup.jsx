@@ -32,6 +32,10 @@ const LoginSignup = ({ setIsLoggedIn }) => {
       const response = await signup({ name, email, password });
       if (response === true) {
         toast.success("Account created successfully");
+        setName("");
+        setEmail("");
+        setPassword("");
+        document.getElementById("login-tab").click();  
       } else {
         toast.error("Some error occurred");
       }

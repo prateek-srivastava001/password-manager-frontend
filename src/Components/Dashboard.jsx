@@ -41,12 +41,18 @@ const Dashboard = ({ setIsLoggedIn, passwords, setPasswords }) => {
     }
   };
 
+  const handleLogout = async () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+  }
+
   const handleSearch = (e) => setSearchTerm(e.target.value);
 
   return (
     <div className="app">
       <ToastContainer />
-      <h1 className="heading">Password Manager</h1>
+      <h1 className="heading">Password Manager
+      <button className="logout-button" onClick={handleLogout}>Logout</button></h1>
       <p className="description">Safely manage and access your passwords</p>
       <div className="search-bar">
         <input
