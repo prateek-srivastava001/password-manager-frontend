@@ -7,27 +7,27 @@ body {
 .heading {
   font-size: 32px;
   font-weight: 2000;
-  color: black;
+  color: #1b4d3e; /* Changed text color */
   margin-bottom: 10px;
 }
 
 .heading-2 {
   font-size: 24px;
   font-weight: 2000;
-  color: black;
+  color: #1b4d3e; /* Changed text color */
   margin-bottom: 10px;
 }
 
 .description {
   font-size: 18px;
-  color: grey;
+  color: grey; /* Keeping this grey as per original */
   margin-top: -12px;
   margin-bottom: 24px;
 }
 
 .description-add-password {
   font-size: 14px;
-  color: grey;
+  color: grey; /* Keeping this grey as per original */
   margin-top: -14px;
   margin-bottom: 24px;
 }
@@ -52,7 +52,7 @@ body {
 
 .password-item p {
   margin: 0; /* Remove default margin */
-  color: black; /* Black text color */
+  color: #1b4d3e; /* Keeping this as it is */
 }
 
 .password-item div:first-child {
@@ -64,6 +64,7 @@ body {
 
 .password-item span {
   font-size: 16px; /* Adjust font size */
+  color: #1b4d3e; /* Changed text color */
 }
 
 .details {
@@ -75,6 +76,7 @@ body {
 
 .details p {
   margin: 4px 0; /* Adjust margin for details */
+  color: #1b4d3e; /* Changed text color */
 }
 
 .button-container {
@@ -91,6 +93,7 @@ body {
   background-color: transparent; /* Transparent background */
   cursor: pointer; /* Cursor pointer on hover */
   transition: background-color 0.3s; /* Smooth transition for hover effect */
+  color: #1b4d3e; /* Keeping this as it is */
 }
 
 .button-container button + button {
@@ -98,7 +101,7 @@ body {
 }
 
 .button-container button:hover {
-  background-color: #000;
+  background-color: #1b4d3e; /* Keeping this as it is */
   color: #fff;
 }
 
@@ -113,10 +116,11 @@ body {
   width: 60%;
   margin-right: 10px;
   outline: none;
+  color: #1b4d3e; /* Changed text color */
 }
 
 .add-button {
-  background-color: black;
+  background-color: #1b4d3e;
   color: white;
   border: none;
   border-radius: 8px;
@@ -126,7 +130,7 @@ body {
 }
 
 .add-button:hover {
-  background-color: #333;
+  background-color: #143d31;
 }
 
 .overlay {
@@ -150,6 +154,7 @@ body {
 
 .dialog h2 {
   margin-top: 0;
+  color: #1b4d3e; /* Changed text color */
 }
 
 .dialog form {
@@ -162,6 +167,7 @@ body {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  color: #1b4d3e; /* Changed text color */
 }
 
 .dialog button.cancel-button {
@@ -183,18 +189,18 @@ body {
   background-color: #fff;
 }
 
-.logout-button{
-  outline:none;
-  border:none;
+.logout-button {
+  outline: none;
+  border: none;
   padding: 12px 18px;
-  border-radius:10px;
+  border-radius: 10px;
   margin-left: 184px;
-  background-color: #000;
-  color: #fff;
-  font-size: 16 px;
+  background-color: #1b4d3e;
+  color: #fff; /* Keeping this as it is */
+  font-size: 16px;
   cursor: pointer;
 }
 
-.logout-button:hover{
-  background-color: #333;
+.logout-button:hover {
+  background-color: #143d31;
 }
