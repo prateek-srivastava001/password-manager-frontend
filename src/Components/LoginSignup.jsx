@@ -1,76 +1,81 @@
-import React, { useState } from 'react';
-import './loginsignup.css';
-import user_icon from '../Assets/person.png';
-import email_icon from '../Assets/email.png';
-import password_icon from '../Assets/password.png';
+import React, { useState, useEffect } from 'react';
+import PasswordForm from './PasswordForm';
+import PasswordList from './PasswordList';
 import { ToastContainer, toast } from 'react-toastify';
-import { login, signup } from '../api/api';
+import 'react-toastify/dist/ReactToastify.css';
+import '../App.css';
+import { fetchPasswords, addPassword } from '../api/api';
 
-const LoginSignup = ({ setIsLoggedIn }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Dashboard = ({ setIsLoggedIn, passwords, setPasswords }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    fetchAllPasswords();
+  }, []);
+
+  const fetchAllPasswords = async () => {
     try {
-      const response = await login({ email, password });
-      if (response === true) {
-        setIsLoggedIn(true);
-        toast.success("Logged in successfully");
-      } else {
-        toast.error("Invalid email or password");
-      }
+      const data = await fetchPasswords();
+      setPasswords(data);
     } catch (error) {
-      console.error('Error logging in:', error.message);
+      console.error('Error fetching passwords:', error.message);
     }
   };
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
+  const openDialog = () => setIsDialogOpen(true);
+  const closeDialog = () => setIsDialogOpen(false);
+
+  const handleAddPassword = async (newPassword) => {
     try {
-      const response = await signup({ name, email, password });
+      const response = await addPassword(newPassword);
       if (response === true) {
-        toast.success("Account created successfully");
-        setName("");
-        setEmail("");
-        setPassword("");
-        document.getElementById("login-tab").click();  
+        toast.success("Password added successfully");
+        await fetchAllPasswords();
+        closeDialog();
       } else {
         toast.error("Some error occurred");
       }
     } catch (error) {
-      console.error('Error signing up:', error.message);
+      console.error('Error adding password:', error.message);
     }
   };
 
+  const handleLogout = async () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+  }
+
+  const username = localStorage.getItem('name');
+
+  const handleSearch = (e) => setSearchTerm(e.target.value);
   return (
-    <div className="container">
+    <div className="app">
       <ToastContainer />
-      <div className="header">
-        <div className="text">Login</div>
-        <div className="underline"></div>
+      <h1 className="heading">Password Manager
+      <button className="logout-button" onClick={handleLogout}>Logout</button></h1>
+      <p className="description">Safely manage and access your passwords</p>
+      <h1 className="heading-2">Hey, {username} :)</h1>
+      <div className="search-bar">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search passwords..."
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+        <button className="add-button" onClick={openDialog}>+ Add New Password</button>
+        <PasswordList passwords={passwords} onDeletePassword={fetchAllPasswords} />
+        {isDialogOpen && (
+          <div className="overlay">
+            <div className="dialog">
+              <PasswordForm onSubmit={handleAddPassword} onCancel={closeDialog} title="Add New Password" desc="Add" />
+            </div>
+          </div>
+        )}
       </div>
-      <form className="inputs">
-        <div className="input">
-          <img src={user_icon} alt="" />
-          <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-        </div>
-        <div className="input">
-          <img src={email_icon} alt="" />
-          <input type="email" placeholder='Email Address' value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <div className="input">
-          <img src={password_icon} alt="" />
-          <input type="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <div className="submit-container">
-          <button type="submit" className="submit" onClick={handleLogin}>Login</button>
-          <button type="submit" className="submit" onClick={handleSignup}>Sign Up</button>
-        </div>
-      </form>
     </div>
   );
 };
 
-export default LoginSignup;
+export default Dashboard;
