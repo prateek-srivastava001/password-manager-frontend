@@ -18,11 +18,9 @@ const Dashboard = ({ setIsLoggedIn }) => {
   const fetchAllPasswords = async () => {
     try {
       const data = await fetchPasswords();
-      setPasswords(Array.isArray(data) ? data : 
-                  Array.isArray(data?.data) ? data.data : []);
+      setPasswords(Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : []);
     } catch (error) {
       console.error('Error fetching passwords:', error.message);
-      toast.error("Error fetching passwords");
       setPasswords([]);
     }
   };
