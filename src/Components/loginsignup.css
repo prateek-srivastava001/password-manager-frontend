@@ -23,7 +23,7 @@ body {
     display: flex;
     flex-direction: column;
     margin: auto;
-    max-width: 480px;
+    width: 580px;
     padding: 18px;
     background: #fff;
     box-sizing: border-box;
@@ -180,4 +180,39 @@ body {
     .text {
         font-size: 28px;
     }
+
+
+    .toggle {
+        font-size: 12px;
+    }
+
+    .toggle button {
+        font-size: 12px;
+    }
+}
+
+.toggle {
+    margin-top: 16px;
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.toggle span {
+    margin-right: 8px;
+}
+
+.toggle button {
+    background: none;
+    border: none;
+    color: #1b4d3e;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.toggle button:hover {
+    color: #143d31;
 }

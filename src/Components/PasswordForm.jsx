@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import InputField from './InputField';
 
-const PasswordForm = ({initialUrl, email: initialEmail, password: initialPassword, onSubmit, onCancel, title, desc }) => {
+const PasswordForm = ({initialUrl, initialName, initialUsername, initialPassword, onSubmit, onCancel, title, desc }) => {
   const [url, setURL] = useState(initialUrl);
-  const [email, setEmail] = useState(initialEmail);
+  const [name, setName] = useState(initialName);
+  const [username, setUsername] = useState(initialUsername);
   const [password, setPassword] = useState(initialPassword);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newPassword = { url, email, password };
+    const newPassword = { url, name, username, password };
     onSubmit(newPassword);
     setURL('');
-    setEmail('');
+    setName('');
+    setUsername('');
     setPassword('');
   };
 
@@ -21,6 +23,13 @@ const PasswordForm = ({initialUrl, email: initialEmail, password: initialPasswor
       <p className="description-add-password">Enter the necessary information to {desc.toLowerCase()} this password.</p>
       <InputField
         type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+      <InputField
+        type="text"
         placeholder="URL"
         value={url}
         onChange={(e) => setURL(e.target.value)}
@@ -28,9 +37,9 @@ const PasswordForm = ({initialUrl, email: initialEmail, password: initialPasswor
       />
       <InputField
         type="text"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        placeholder="username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         required
       />
       <InputField

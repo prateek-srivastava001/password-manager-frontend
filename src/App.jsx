@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Dashboard from './Components/Dashboard';
-import LoginSignup from './Components/LoginSignup';
+import LoginPage from './Components/LoginPage';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchPasswords } from './api/api';
@@ -32,7 +32,7 @@ const App = () => {
       {isLoggedIn ? (
         <Dashboard setIsLoggedIn={handleLoggedIn} passwords={passwords} setPasswords={setPasswords} />
       ) : (
-        <LoginSignup setIsLoggedIn={handleLoggedIn} />
+        <LoginPage setIsLoggedIn={handleLoggedIn} />
       )}
     </div>
   );

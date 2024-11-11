@@ -111,7 +111,7 @@ export const editPassword = async (id, updatedPassword) => {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`, // Include token in Authorization header
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(updatedPassword),
         });

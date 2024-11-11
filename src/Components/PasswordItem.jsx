@@ -1,74 +1,99 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { toast } from "react-toastify";
 import PasswordForm from './PasswordForm';
-import { deletePassword, editPassword, fetchPasswords } from '../api/api';
+import { deletePassword, editPassword } from '../api/api';
 
 const PasswordItem = ({ password, onDelete }) => {
-  const { id, url, email, password: pw } = password;
+  const { id, url, username, password: pw, name } = password;
   const [isExpanded, setIsExpanded] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const handleExpand = () => setIsExpanded(!isExpanded);
-  const handleEdit = () => setIsEditDialogOpen(true);
-  const handleCloseEditDialog = () => setIsEditDialogOpen(false);
-  const togglePasswordVisibility = () => setShowPassword(!showPassword); 
+  const handleTogglePassword = useCallback(() => {
+    setIsPasswordVisible(prev => !prev);
+  }, []);
+
+  const handleExpand = useCallback(() => {
+    setIsExpanded(prev => !prev);
+  }, []);
+
+  const handleEdit = useCallback(() => {
+    setIsEditDialogOpen(true);
+  }, []);
+
+  const handleCloseEditDialog = useCallback(() => {
+    setIsEditDialogOpen(false);
+  }, []);
 
   const handleEditPassword = async (updatedPassword) => {
     try {
       const response = await editPassword(id, updatedPassword);
-      if(response === true){
+      
+      if (response === true) {
         toast.success("Credentials edited successfully");
-      }else{
-        toast.error("Some error occured");
+        onDelete();
+        handleCloseEditDialog();
+      } else {
+        toast.error("Some error occurred");
       }
-      await fetchPasswords();
-      handleCloseEditDialog();
     } catch (error) {
       console.error('Error editing password:', error.message);
+      toast.error("Error editing password");
     }
   };
 
   const handleDelete = async () => {
     try {
       const response = await deletePassword(id);
-      if(response === true){
+      if (response === true) {
         toast.success("Credentials deleted successfully");
-      }else{
-        toast.error("Some error occured");
+        onDelete();
+      } else {
+        toast.error("Some error occurred");
       }
-      onDelete(id);
     } catch (error) {
       console.error('Error deleting password:', error.message);
+      toast.error("Error deleting password");
     }
   };
 
   return (
     <div className={`password-item ${isExpanded ? 'expanded' : ''}`}>
-      <div onClick={handleExpand}>
-        <p>{url}</p>
-        {isExpanded ? '▲' : '▼'}
+      <div onClick={handleExpand} className="password-header">
+        <p><strong>{name}</strong> - {url}</p>
+        <span className="expand-icon">{isExpanded ? '▲' : '▼'}</span>
       </div>
       {isExpanded && (
-        <div className="details">
-          <p><strong>Email:</strong> {email}</p>
-          <p><strong>Password:</strong> {pw}</p>
-          <p><strong>URL:</strong> {url}</p>
-        </div>
-      )}
-      {isExpanded && (
-        <div className="button-container">
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
-        </div>
+        <>
+          <div className="details">
+            <p><strong>URL:</strong> {url}</p>
+            <p><strong>Username:</strong> {username}</p>
+            <p><strong>Password:</strong> {isPasswordVisible ? pw : '******'}</p>
+          </div>
+          <div className="button-container">
+            <button 
+              onClick={handleTogglePassword} 
+              className="toggle-password"
+            >
+              {isPasswordVisible ? 'Hide' : 'Show'} Password
+            </button>
+            <button onClick={handleEdit} className="edit-button">
+              Edit
+            </button>
+            <button onClick={handleDelete} className="delete-button">
+              Delete
+            </button>
+          </div>
+        </>
       )}
       {isEditDialogOpen && (
         <div className="overlay">
           <div className="dialog">
             <PasswordForm
+              initialName={name}
+              initialUsername={username}
+              initialPassword={pw}
               initialUrl={url}
-              email={email}
-              password={pw}
               onSubmit={handleEditPassword}
               onCancel={handleCloseEditDialog}
               title="Edit Password"
