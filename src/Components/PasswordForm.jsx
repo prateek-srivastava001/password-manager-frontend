@@ -37,7 +37,7 @@ const PasswordForm = ({initialUrl, initialName, initialUsername, initialPassword
       />
       <InputField
         type="text"
-        placeholder="username"
+        placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         required
